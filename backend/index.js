@@ -8,7 +8,7 @@ import doctorRouter from './routes/doctorRoutes.js';
 import userRouter from './routes/userRoutes.js';
 const app=express();
 app.use(cors({
-    origin:["https://prescripto-zm75.vercel.app"],
+    origin:["https://prescripto-zm75-jhz2m99ue-bharat235-beeps-projects.vercel.app"],
     methods:['POST','GET'],
     credentials:true
 }))
