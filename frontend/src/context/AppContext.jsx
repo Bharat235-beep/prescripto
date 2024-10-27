@@ -29,7 +29,7 @@ export const AppProvider=(props)=>{
             const {data}=await axios.get(backendUrl+'/api/user/get-profile',{headers:{token}})
             if(data.success){
                 setUserData(data.userData)
-                // console.log(data.userData)
+                //  console.log(data.userData)
             }
             else{
                 toast.error(data.message)
@@ -43,14 +43,14 @@ export const AppProvider=(props)=>{
             loadUserData()
            }
         getAllDoctors()
-    },[])
+    },[token])
     useEffect(()=>{
        if(token){
         loadUserData()
        }
-       else{
-        setUserData(null)
-       }
+    //    else{
+    //     setUserData(null)
+    //    }
     },[token])
 
     const value={
