@@ -7,15 +7,15 @@ import adminRouter from './routes/adminRoutes.js';
 import doctorRouter from './routes/doctorRoutes.js';
 import userRouter from './routes/userRoutes.js';
 const app=express();
-const port=process.env.PORT || 4000
-connectDb();
-cloudinaryConnect();
-app.use(express.json())
 app.use(cors({
     origin:["https://prescripto-zm75.vercel.app"],
     methods:['POST','GET'],
     credentials:true
 }))
+const port=process.env.PORT || 4000
+connectDb();
+cloudinaryConnect();
+app.use(express.json())
 app.use('/api/admin',adminRouter)
 app.use('/api/doctor',doctorRouter)
 app.use('/api/user',userRouter)
