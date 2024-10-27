@@ -12,7 +12,7 @@ connectDb();
 cloudinaryConnect();
 app.use(express.json())
 app.use(cors({
-    origin:["https://prescripto-zm75.vercel.app/"],
+    origin:["https://prescripto-zm75.vercel.app"],
     methods:['POST','GET'],
     credentials:true
 }))
