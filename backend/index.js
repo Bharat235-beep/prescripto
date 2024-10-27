@@ -11,7 +11,11 @@ const port=process.env.PORT || 4000
 connectDb();
 cloudinaryConnect();
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin:["https://prescripto-zm75.vercel.app/"],
+    methods:['POST','GET'],
+    credentials:true
+}))
 app.use('/api/admin',adminRouter)
 app.use('/api/doctor',doctorRouter)
 app.use('/api/user',userRouter)
