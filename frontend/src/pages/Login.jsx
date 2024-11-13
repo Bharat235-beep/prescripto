@@ -26,6 +26,9 @@ const Login = () => {
               setName('')
               setEmail('')
               setPassword('')
+              // setTimeout(() => {
+              //   loadUserData()       
+              // }, 1000);
               return toast.update(toastId,{type:'success',isLoading:false,autoClose:5000,render:'Account created successfully',closeButton:null})
               // toast.update(toastId,{isLoading:false,type:'success',render:'Account created successfully',closeButton:null,autoClose:5000})
             }
@@ -41,6 +44,9 @@ const Login = () => {
               setToken(data.token)
               setEmail('')
               setPassword('')
+              // setTimeout(() => {
+              //   loadUserData()       
+              // }, 1000);
               return toast.update(toastId,{type:'success',isLoading:false,autoClose:5000,render:'Login successfull',closeButton:null})
             }
             else{

@@ -16,38 +16,57 @@ export const AppProvider=(props)=>{
 
     const getAllDoctors=async()=>{
        try {
-         const {data}=await axios.get(backendUrl+'/api/doctor/list')
+        setProgress(20)
+        const {data}=await axios.get(backendUrl+'/api/doctor/list')
+        setProgress(60)
         //  console.log(data)
-         setDoctors(data.doctors)
+        if(data.success){
+            
+            setDoctors(data.doctors)
+            setProgress(100)
+        }
+        else{
+            setProgress(100)
+            toast.error(data.message)
+        }
         //  console.log(backendUrl)
-       } catch (error) {
+    } catch (error) {
         console.log(error)
+        setProgress(100)
        }
     }
 
     const loadUserData=async()=>{
         try {
+            setProgress(20)
             const {data}=await axios.get(backendUrl+'/api/user/get-profile',{headers:{token}})
+            setProgress(60)
             if(data.success){
                 setUserData(data.userData)
+                console.log('load user',data)
+                setProgress(100)
+                return
                 //  console.log(data.userData)
             }
             else{
+                console.log('load user',data)
                 toast.error(data.message)
+                setProgress(100)
             }
         } catch (error) {
             console.log(error)
+            setProgress(100)
         }
     }
     useEffect(()=>{
-        setProgress(10)
         if(token){
             loadUserData()
         }
-        setProgress(50)
-        getAllDoctors()
-        setProgress(100)
+       
     },[token])
+    useEffect(()=>{   
+        getAllDoctors()    
+    },[])
     
 
     const value={
