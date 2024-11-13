@@ -10,7 +10,7 @@ const Appointment = () => {
   const { doc_id } = useParams()
   const navigate = useNavigate()
   const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-  const { doctors, currencySymbol, backendUrl, getAllDoctors, token } = useContext(AppContext)
+  const { doctors, currencySymbol, backendUrl, getAllDoctors, token,setProgress} = useContext(AppContext)
   const [docInfo, setDocInfo] = useState(null)
   const [docSlots, setDocSlots] = useState([])
   const [dayIndex, setDayIndex] = useState(0);
@@ -22,44 +22,48 @@ const Appointment = () => {
   }
 
   const fetchTimeSlots = async () => {
-    setDocSlots([])
-    let today = new Date()
-
-    for (let i = 0; i < 7; i++) {
-      let currentDate = new Date(today);
-      currentDate.setDate(today.getDate() + i);
-      // console.log(currentDate)
-      let endTime = new Date();
-      endTime.setDate(today.getDate() + i);
-      endTime.setHours(21, 0, 0, 0);
-      // console.log(endTime)
-      if (today.getDate() == currentDate.getDate()) {
-        currentDate.setHours(currentDate.getHours() > 10 ? currentDate.getHours() + 1 : 10);
-        currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0);
-      }
-      else {
-        currentDate.setHours(10)
-        currentDate.setMinutes(0)
-      }
-      let timeSlots = [];
-      while (currentDate < endTime) {
-        let formattedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        let day = currentDate.getDate()
-        let month = currentDate.getMonth() + 1
-        let year = currentDate.getFullYear()
-        const slotDate = day + '_' + month + '_' + year
-        const isSlotAvailable = docInfo.slots_booked[slotDate] && docInfo.slots_booked[slotDate].includes(formattedTime) ? false : true
-        if (isSlotAvailable) {
-          timeSlots.push({
-            dateTime: new Date(currentDate),
-            time: formattedTime
-          })
-        }
-        currentDate.setMinutes(currentDate.getMinutes() + 30)
-      }
-      // console.log(timeSlots)
-      setDocSlots(prev => ([...prev, timeSlots]))
-    }
+   try {
+     setDocSlots([])
+     let today = new Date()
+ 
+     for (let i = 0; i < 7; i++) {
+       let currentDate = new Date(today);
+       currentDate.setDate(today.getDate() + i);
+       // console.log(currentDate)
+       let endTime = new Date();
+       endTime.setDate(today.getDate() + i);
+       endTime.setHours(21, 0, 0, 0);
+       // console.log(endTime)
+       if (today.getDate() == currentDate.getDate()) {
+         currentDate.setHours(currentDate.getHours() > 10 ? currentDate.getHours() + 1 : 10);
+         currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0);
+       }
+       else {
+         currentDate.setHours(10)
+         currentDate.setMinutes(0)
+       }
+       let timeSlots = [];
+       while (currentDate < endTime) {
+         let formattedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+         let day = currentDate.getDate()
+         let month = currentDate.getMonth() + 1
+         let year = currentDate.getFullYear()
+         const slotDate = day + '_' + month + '_' + year
+         const isSlotAvailable = docInfo.slots_booked[slotDate] && docInfo.slots_booked[slotDate].includes(formattedTime) ? false : true
+         if (isSlotAvailable) {
+           timeSlots.push({
+             dateTime: new Date(currentDate),
+             time: formattedTime
+           })
+         }
+         currentDate.setMinutes(currentDate.getMinutes() + 30)
+       }
+       // console.log(timeSlots)
+       setDocSlots(prev => ([...prev, timeSlots]))
+     }
+   } catch (error) {
+    console.log(error)
+   }
   }
 
   const bookAppointment = async () => {
@@ -70,8 +74,8 @@ const Appointment = () => {
       let month = date.getMonth() + 1
       let year = date.getFullYear()
       const slotDate = day + '_' + month + '_' + year
-      console.log(slotDate)
-      console.log(timeSlot)
+      // console.log(slotDate)
+      // console.log(timeSlot)
       const { data } = await axios.post(backendUrl + '/api/user/book-appointment', {
         docId: doc_id,
         slotTime: timeSlot, slotDate
@@ -92,18 +96,20 @@ const Appointment = () => {
   }
 
   useEffect(() => {
+    setProgress(20)
     fetchDoctor()
-    console.log(docSlots)
+    setProgress(100)
+    // console.log(docSlots)
   }, [doctors, doc_id])
 
   useEffect(() => {
     fetchTimeSlots();
   }, [docInfo])
-  useEffect(() => {
-    console.log(docSlots)
-  }, [docSlots])
+  // useEffect(() => {
+  //   console.log(docSlots)
+  // }, [docSlots])
   return docInfo && (
-    <div>
+    <div className='clear-both'>
       {/* Top section */}
       <div className='flex flex-col sm:flex-row items-center justify-center gap-5 mt-3'>
         {/* Doctor Image */}

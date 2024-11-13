@@ -5,11 +5,13 @@ import { AppContext } from '../../context/AppContext'
 
 const Appointments = () => {
     const { appointments, dToken, getAppointments, cancelAppointment, completeAppointment } = useContext(DoctorContext)
-    const { formatDate, calculateAge, currency } = useContext(AppContext)
+    const { formatDate, calculateAge, currency,setProgress } = useContext(AppContext)
     useEffect(() => {
+        setProgress(40)
         if (dToken) {
             getAppointments()
         }
+        setProgress(100)
     }, [dToken])
     return (
         <div className='m-5'>

@@ -1,13 +1,17 @@
 import React, { useContext, useEffect } from 'react'
 import { AdminContext } from '../../context/AdminContext'
+import { AppContext } from '../../context/AppContext'
 
 const DoctorsList = () => {
   const {aToken,doctors,getAllDoctors,changeAvailability}=useContext(AdminContext)
+  const {setProgress}=useContext(AppContext)
 
   useEffect(()=>{
+    setProgress(40)
     if(aToken){
       getAllDoctors()
     }
+    setProgress(100)
   },[aToken])
   return doctors && (
     <div className='flex flex-col gap-5 py-2 mx-4 max-h-[90vh] overflow-y-scroll'>  

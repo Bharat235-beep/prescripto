@@ -14,8 +14,8 @@ const Speciality = () => {
         specialityData.map((val,index)=>{
             return (
                 <div key={index} onClick={()=>navigate('/doctors/'+val.speciality)} className='flex flex-col items-center cursor-pointer justify-center hover:translate-y-[-8%] transition-all duration-300'>
-                    <img className='w-20' src={val.image} alt="" />
-                    <p className='text-center text-sm'>{val.speciality}</p>
+                    <img className='w-[70px] sm:w-20' src={val.image} alt="" />
+                    <p className='text-center text-nowrap text-sm'>{val.speciality}</p>
                 </div>
             )
         })

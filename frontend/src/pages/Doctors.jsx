@@ -5,17 +5,21 @@ import { AppContext } from '../context/AppContext';
 const Doctors = () => {
   const {speciality}=useParams();
   const navigate=useNavigate();
-  const {doctors}=useContext(AppContext)
+  const {doctors,setProgress}=useContext(AppContext)
   const [filterDoc,setFilterDoc]=useState([])
   const [showFilter,setShowFilter]=useState(false)
   // console.log(speciality)
   useEffect(()=>{
+    setProgress(20)
     if(speciality){
       setFilterDoc(doctors.filter(val=>val.speciality===speciality))
+      setProgress(60)
     }
     else{
       setFilterDoc(doctors)
+      setProgress(60)
     }
+    setProgress(100)
   },[speciality,doctors])
   return (
     <div className='clear-both'>

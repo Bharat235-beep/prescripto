@@ -51,11 +51,11 @@ const Login = () => {
             <p className=' text-center font-semibold text-3xl'><span className='text-primary'>{state}</span> Login</p>
             <div className='w-full'>
                 <p>Email:</p>
-                <input placeholder='richard@gmail.com' value={email} onChange={(e)=>setEmail(e.target.value)} className='border w-full py-1 px-2 border-gray-600 rounded focus:outline-primary' type="email" required />
+                <input placeholder={`${state==='Doctor'?'richard@gmail.com':'admin@gmail.com'}`} value={email} onChange={(e)=>setEmail(e.target.value)} className='border w-full py-1 px-2 border-gray-600 rounded focus:outline-primary' type="email" required />
             </div>
             <div className='w-full'>
                 <p>Password:</p>
-                <input placeholder='123456' value={password} onChange={(e)=>setPassword(e.target.value)} className='border w-full py-1 px-2 border-gray-600 rounded focus:outline-primary' type="password" required />
+                <input placeholder={`${state==='Doctor'?'123456':'admin@123'}`} value={password} onChange={(e)=>setPassword(e.target.value)} className='border w-full py-1 px-2 border-gray-600 rounded focus:outline-primary' type="password" required />
             </div>
             <button className='bg-primary text-white font-medium w-full rounded py-1 px-2 hover:bg-indigo-600'>Login</button>
             {

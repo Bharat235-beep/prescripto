@@ -5,12 +5,14 @@ import { AppContext } from '../../context/AppContext'
 
 function Dashboard() {
   const {dashboard,getDashboard,aToken,cancelAppointment}=useContext(AdminContext)
-  const {formatDate}=useContext(AppContext)
+  const {formatDate,setProgress}=useContext(AppContext)
 
   useEffect(()=>{
+    setProgress(40)
     if(aToken){
       getDashboard()
     }
+    setProgress(100)
   },[aToken])
   return dashboard && (
     <div className='m-5 max-h-[80vh] overflow-y-scroll'>

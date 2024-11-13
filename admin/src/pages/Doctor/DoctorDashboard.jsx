@@ -5,11 +5,13 @@ import { AppContext } from '../../context/AppContext'
 
 const DoctorDashboard = () => {
   const {dToken, dashboard,getDashboard,cancelAppointment,completeAppointment}=useContext(DoctorContext)
-  const {currency,formatDate}=useContext(AppContext)
+  const {currency,formatDate,setProgress}=useContext(AppContext)
   useEffect(()=>{
+    setProgress(40)
     if(dToken){
       getDashboard()
     }
+    setProgress(100)
   },[dToken])
   return dashboard && (
     <div className='m-5 min-h-[50vh] max-h-[80vh] overflow-y-scroll'>

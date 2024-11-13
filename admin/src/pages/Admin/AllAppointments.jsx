@@ -5,11 +5,13 @@ import { AppContext } from '../../context/AppContext'
 
 const AllAppointments = () => {
   const { appointments, getAllAppointments, aToken,calculateAge,cancelAppointment } = useContext(AdminContext)
-  const {formatDate,currency}=useContext(AppContext)
+  const {formatDate,currency,setProgress}=useContext(AppContext)
   useEffect(() => {
+    setProgress(40)
     if (aToken) {
       getAllAppointments()
     }
+    setProgress(100)
   }, [aToken])
   return (
     <div className='max-w-6xl m-5 max-h-[80vh] overflow-y-scroll'>

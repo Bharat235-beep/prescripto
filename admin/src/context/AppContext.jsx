@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { createContext } from "react";
 
 export const AppContext=createContext()
 
 export const AppProvider=(props)=>{
     const backendUrl=import.meta.env.VITE_BACKEND_URL
+    const [progress,setProgress]=useState(0)
     const currency='$'
     const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
     const formatDate=(date)=>{
@@ -18,7 +20,7 @@ export const AppProvider=(props)=>{
   
     const value={
         backendUrl,formatDate,currency,
-        calculateAge
+        calculateAge,progress,setProgress
     }
     return(
         <AppContext.Provider value={{...value}}>

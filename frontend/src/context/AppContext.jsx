@@ -7,6 +7,7 @@ import {toast} from 'react-toastify';
 export const AppContext=createContext()
 
 export const AppProvider=(props)=>{
+    const [progress, setProgress] = useState(0)
     const currencySymbol='$'
     const backendUrl=import.meta.env.VITE_BACKEND_URL
     const [doctors,setDoctors]=useState([])
@@ -39,24 +40,21 @@ export const AppProvider=(props)=>{
         }
     }
     useEffect(()=>{
+        setProgress(10)
         if(token){
             loadUserData()
-           }
+        }
+        setProgress(50)
         getAllDoctors()
+        setProgress(100)
     },[token])
-    useEffect(()=>{
-       if(token){
-        loadUserData()
-       }
-    //    else{
-    //     setUserData(null)
-    //    }
-    },[token])
+    
 
     const value={
         backendUrl,loadUserData,getAllDoctors,
         doctors,currencySymbol,
-        token,setToken,userData,setUserData
+        token,setToken,userData,setUserData,
+        progress, setProgress
     }
     return(
         <AppContext.Provider value={{...value}}>

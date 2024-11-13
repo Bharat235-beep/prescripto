@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router-dom';
 
 const MyAppointments = () => {
   const navigate=useNavigate()
-  const { token,backendUrl ,getAllDoctors} = useContext(AppContext)
+  const { token,backendUrl ,getAllDoctors,setProgress} = useContext(AppContext)
   const [appointments,setAppointments]=useState(null)
   const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
   const formateDate=(date)=>{
@@ -16,18 +16,22 @@ const MyAppointments = () => {
 
   const listAppointments=async()=>{
     try {
+      setProgress(10)
       const {data}=await axios.get(backendUrl+'/api/user/list-appointments',{headers:{token}})
       if (data.success) {
         setAppointments(data.appointments.reverse())
+        setProgress(100)
         // console.log(data.appointments)
       }
       else{
         // console.log(data.message)
+        setProgress(100)
         toast.error(data.message)
       }
       
     } catch (error) {
       console.log(error)
+      setProgress(100)
     }
   }
   const cancelAppointment=async(appointmentId)=>{

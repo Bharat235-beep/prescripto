@@ -12,15 +12,19 @@ import { DoctorContext } from './context/DoctorContext'
 import DoctorDashboard from './pages/Doctor/DoctorDashboard'
 import Appointments from './pages/Doctor/Appointments'
 import DoctorProfile from './pages/Doctor/DoctorProfile'
+import LoadingBar from 'react-top-loading-bar'
+import { AppContext } from './context/AppContext'
 
 const App = () => {
   const {aToken}=useContext(AdminContext)
   const {dToken}=useContext(DoctorContext)
+  const {progress,setProgress}=useContext(AppContext)
  
   return dToken||aToken?
   (
     <div className=''>
      <Navbar/>
+     <LoadingBar color='blue' progress={progress} onLoaderFinished={()=>setProgress(0)}/>
      <div className='flex bg-violet-50'>
      <Sidebar/>
       <Routes>

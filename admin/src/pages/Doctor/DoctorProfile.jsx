@@ -4,7 +4,7 @@ import { AppContext } from '../../context/AppContext'
 
 const DoctorProfile = () => {
   const {dToken,getProfile,profile,setProfile,updateProfile}=useContext(DoctorContext)
-  const {currency}=useContext(AppContext)
+  const {currency,setProgress}=useContext(AppContext)
   const [isEdit,setIsEdit]=useState(false)
 
   const handleUpdate=()=>{
@@ -12,9 +12,11 @@ const DoctorProfile = () => {
     setIsEdit(false)
   }
   useEffect(()=>{
+    setProgress(40)
     if(dToken){
       getProfile()
     }
+    setProgress(100)
   },[dToken])
   return profile && (
     <div className='m-5'>
